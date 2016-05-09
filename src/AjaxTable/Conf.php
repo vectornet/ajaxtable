@@ -35,11 +35,11 @@ class Conf extends Format\Table
     private $Classes;
 
     /**
-     * List of VectorDev\AjaxTable\Col
+     * List of VectorDev\AjaxTable\Column
      *
      * @var array
      */
-    private $table_cols = [];
+    private $table_columns = [];
 
     /**
      * List of custom params to send with request
@@ -181,26 +181,37 @@ class Conf extends Format\Table
     }
 
     /**
-     * Add VectorDev\AjaxTable\Col to list
+     * Add VectorDev\AjaxTable\Column to list
      *
-     * @param VectorDev\AjaxTable\Col $Col
+     * @param VectorDev\AjaxTable\Column $Column
      * @return void
      */
-    public function addCol(Col $Col)
+    public function addColumn(Column $Column)
     {
-        $this->table_cols[$Col->getName()] = $Col;
+        $this->table_columns[$Column->getName()] = $Column;
     }
 
     /**
-     * Get VectorDev\AjaxTable\Col array data on list
+     * addColumn method alias
+     *
+     * @param VectorDev\AjaxTable\Column $Column
+     * @return void
+     */
+    public function addCol(Column $Column)
+    {
+        $this->addColumn($Column);
+    }
+
+    /**
+     * Get VectorDev\AjaxTable\Column array data on list
      *
      * @return array
      */
-    public function getArrayCol()
+    public function getArrayColumn()
     {
         $array = [];
-        foreach ($this->table_cols as $Col) {
-            $array[] = $Col->getArray();
+        foreach ($this->table_columns as $Column) {
+            $array[] = $Column->getArray();
         }
         return $array;
     }
@@ -214,9 +225,9 @@ class Conf extends Format\Table
     public function getJsonCol($humanize = false)
     {
         if ($humanize) {
-            $json = json_encode($this->getArrayCol(), JSON_PRETTY_PRINT);
+            $json = json_encode($this->getArrayColumn(), JSON_PRETTY_PRINT);
         } else {
-            $json = json_encode($this->getArrayCol());
+            $json = json_encode($this->getArrayColumn());
         }
         return $json;
     }
@@ -240,7 +251,7 @@ class Conf extends Format\Table
         if ($this->params) {
             $array['params'] = $this->params;
         }
-        $array['cols'] = $this->getArrayCol();
+        $array['cols'] = $this->getArrayColumn();
 
         // pagination conf
         if (!is_null($this->page)) {
