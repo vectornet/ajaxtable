@@ -54,7 +54,10 @@
                 classPaginationCurrentPage: 'ajaxtable-pagination-currentpage',
                 classCols: 'ajaxtable-cols',
                 classSortAsc: 'ajaxtable-sort-asc',
-                classSortDesc: 'ajaxtable-sort-desc'
+                classSortDesc: 'ajaxtable-sort-desc',
+                classSortArrow: 'ajaxtable-sort-arrow',
+                classSortArrowAsc: 'ajaxtable-sort-arrow-asc',
+                classSortArrowDesc: 'ajaxtable-sort-arrow-desc'
             };
 
             var event_options = {
@@ -123,9 +126,17 @@
                 html_cols += '>';
 
                 if (this.getOption('cols')[i].headerTitle) {
-                    if(this.getOption('cols')[i].sortable)
+                    if(this.getOption('cols')[i].sortable) {
                         html_cols += '<a href="javascript://" onclick="$(\'#'+this.getOption('instance_id')+'\').ajaxTableSort(\'' + this.getOption('cols')[i].valueToSort + '\', this);">' + this.getOption('cols')[i].headerTitle + '</a>';
-                    else
+                        html_cols += '<span class="'+this.getOption('classSortArrow')+'">';
+
+                        if (this.getOption('sortCol') && this.getOption('sortCol') == this.getOption('cols')[i].valueToSort) {
+                            html_cols += this.getOption('sortOrder') === 'ASC' ? '▲' : '▼';
+                        }
+
+
+                        html_cols += '<span>';
+                    } else
                         html_cols += this.getOption('cols')[i].headerTitle;
                 }
 
@@ -286,14 +297,16 @@
                 this.setOption('sortOrder', 'ASC');
             this.setOption('sortCol', valueToSort);
 
+            $('.'+this.getOption('classSortArrow')).html('');
             $('.'+this.getOption('classSortAsc')).removeClass(this.getOption('classSortAsc'));
             $('.'+this.getOption('classSortDesc')).removeClass(this.getOption('classSortDesc'));
 
-            if (this.getOption('sort') === 'ASC')
-                $(element).parent().addClass(this.getOption('classSortAsc'));
-            else
-                $(element).parent().addClass(this.getOption('classSortDesc'));
-
+            $(element)
+                    .parent()
+                    .addClass(this.getOption(this.getOption('sortOrder') === 'ASC' ? 'classSortAsc' : 'classSortDesc'))
+                    .find('span')
+                    .html(this.getOption('sortOrder') === 'ASC' ? '▲' : '▼')
+            ;
             $(this).refresh();
         },
 
@@ -314,62 +327,62 @@
          * @returns {string}
          */
         getPagination: function() {
-            var html = '';
+            var html = '<td colspan="'+this.getOption('cols').length+'">';
+            html += '<div class="'+this.getOption('classPaginationContainer')+'"><ul>';
 
-            html += '<td colspan="'+this.getOption('cols').length+'">';
-            html += '<span class="'+this.getOption('classPaginationContainer')+'"><p>'+this.getOption('textPagination')+': </p>';
+            if (this.getOption('page') >  1) {
+                var frist = '<li '+((this.getOption('classPaginationFirst')) ? 'class="'+this.getOption('classPaginationFirst')+'"' : '')+'>';
+                frist += '<a href="javascript://" onclick="$(\'#'+this.attr('id')+'\').goToFirst();">'+this.getOption('textFirst')+'</a>';
+                frist += '</li>';
 
-            var previous = '<li '+((this.getOption('classPaginationPrevious')) ? 'class="'+this.getOption('classPaginationPrevious')+'"' : '')+'>';
-            previous += '<button onclick="$(\'#'+this.attr('id')+'\').goToPrevious();">'+this.getOption('textPrevious')+'</button>';
-            previous += '</li>';
+                var previous = '<li '+((this.getOption('classPaginationPrevious')) ? 'class="'+this.getOption('classPaginationPrevious')+'"' : '')+'>';
+                previous += '<a href="javascript://" onclick="$(\'#'+this.attr('id')+'\').goToPrevious();">'+this.getOption('textPrevious')+'</a>';
+                previous += '</li>';
 
-            var next = '<li '+((this.getOption('classPaginationNext')) ? 'class="'+this.getOption('classPaginationNext')+'"' : '')+'>';
-            next += '<button onclick="$(\'#'+ this.attr('id') +'\').goToNext();">'+this.getOption('textNext')+'</button>';
-            next += '</li>';
-
-            var frist = '<li '+((this.getOption('classPaginationFirst')) ? 'class="'+this.getOption('classPaginationFirst')+'"' : '')+'>';
-            frist += '<button onclick="$(\'#'+this.attr('id')+'\').goToFirst();">'+this.getOption('textFirst')+'</button>';
-            frist += '</li>';
-
-            var last = '<li '+((this.getOption('classPaginationLast')) ? 'class="'+this.getOption('classPaginationLast')+'"' : '')+'>';
-            last += '<button onclick="$(\'#'+this.attr('id')+'\').goToLast();">'+this.getOption('textLast')+'</button>';
-            last += '</li>';
+                html += frist + previous;
+            }
 
             var jumps = '';
             for (var i = -this.getOption('rowsJump'); i <= this.getOption('rowsJump'); i++) {
                 if (parseInt(this.getOption('page')) + i <= this.getOption('json').totalPages && parseInt(this.getOption('page')) + i > 0) {
                     if (i == 0)
-                        jumps += '<li'+((this.getOption('classPaginationCurrentPage')) ? ' class="'+this.getOption('classPaginationCurrentPage')+'"' : '')+'>'+parseInt(this.getOption('page'))+'</li>';
+                        jumps += '<li'+((this.getOption('classPaginationCurrentPage')) ? ' class="'+this.getOption('classPaginationCurrentPage')+'"' : '')+'><a href="javascript://">'+parseInt(this.getOption('page'))+'</a></li>';
                     else
-                        jumps += '<li'+((this.getOption('classPaginationJumps')) ? ' class="'+this.getOption('classPaginationJumps')+'"' : '')+'><button onclick="$(\'#'+ this.attr('id') +'\').jumpToPage('+(parseInt(this.getOption('page')) + i)+');">'+(parseInt(this.getOption('page')) + i)+'</button></li>';
+                        jumps += '<li'+((this.getOption('classPaginationJumps')) ? ' class="'+this.getOption('classPaginationJumps')+'"' : '')+'><a href="javascript://" onclick="$(\'#'+ this.attr('id') +'\').jumpToPage('+(parseInt(this.getOption('page')) + i)+');">'+(parseInt(this.getOption('page')) + i)+'</a></li>';
                 }
             }
 
-            html += '<ul>';
-            if (this.getOption('page') >  1)
-                html += frist + previous;
-
             html += jumps;
 
-            if(this.getOption('page') <  this.getOption('json').totalPages)
+            if(this.getOption('page') <  this.getOption('json').totalPages) {
+                var next = '<li '+((this.getOption('classPaginationNext')) ? 'class="'+this.getOption('classPaginationNext')+'"' : '')+'>';
+                next += '<a href="javascript://" onclick="$(\'#'+ this.attr('id') +'\').goToNext();">'+this.getOption('textNext')+'</a>';
+                next += '</li>';
+
+                var last = '<li '+((this.getOption('classPaginationLast')) ? 'class="'+this.getOption('classPaginationLast')+'"' : '')+'>';
+                last += '<a href="javascript://" onclick="$(\'#'+this.attr('id')+'\').goToLast();">'+this.getOption('textLast')+'</a>';
+                last += '</li>';
+
                 html += next + last;
+            }
 
             var reload = '<li '+((this.getOption('classPaginationReload')) ? 'class="'+this.getOption('classPaginationReload')+'"' : '')+'>';
-            reload += '<button onclick="$(\'#'+this.attr('id')+'\').refresh();">'+this.getOption('textReload')+'</button>';
+            reload += '<a href="javascript://" onclick="$(\'#'+this.attr('id')+'\').refresh();">'+this.getOption('textReload')+'</a>';
             reload += '</li>';
 
             html += reload;
 
-            html += '</ul>';
+            html += '</ul></div>';
 
-            html += '<select onchange="$(\'#'+this.attr('id')+'\').changeRowsPerPage(this.value);" '+((this.getOption('classPaginationSetRows')) ? 'class="'+this.getOption('classPaginationSetRows')+'"' : '')+'>';
+            html += '<div class="'+this.getOption('classPaginationSetRows')+'">';
+            html += '<select onchange="$(\'#'+this.attr('id')+'\').changeRowsPerPage(this.value);">';
             for (var i = 0; i < this.getOption('rowsOptions').length; i++) {
                 html += '<option value="'+this.getOption('rowsOptions')[i]+'"';
                 html += (this.getOption('rows') == this.getOption('rowsOptions')[i]) ? ' selected="selected"' : '';
                 html += '>';
                 html += this.getOption('textSetRows').replace('%row', this.getOption('rowsOptions')[i])+'</option>';
             }
-            html += '</select>';
+            html += '</select></div>';
 
             if (this.getOption('json').totalRecords > 0) {
                 var rows_text = this.getOption('textTotalRows');
@@ -383,7 +396,7 @@
                 var rows_text = this.getOption('textNoRows');
             }
 
-            html += '</span><span class="'+this.getOption('classPaginationTotalRows')+'"><p>'+rows_text+'</p></span>';
+            html += '<div class="'+this.getOption('classPaginationTotalRows')+'">'+rows_text+'</div>';
             html += '</td>';
 
             return html;

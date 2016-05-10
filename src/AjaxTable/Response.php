@@ -267,7 +267,7 @@ class Response extends Format\Table
      */
     public function getOrderByForSql()
     {
-        return $this->sort_col && $this->sort_order ? [$this->sort_col, $this->sort_order] : null;
+        return $this->sort_col && $this->sort_order ? ['`'.$this->sort_col.'`', $this->sort_order] : null;
     }
 
     /**

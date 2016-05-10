@@ -67,7 +67,7 @@ abstract class Lang
      *
      * @var string
      */
-    protected $setrows = '%row rows per page';
+    protected $setrows = '%row rows';
 
     /**
      * Language on text about empty response

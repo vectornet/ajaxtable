@@ -27,7 +27,7 @@ class PtBr extends Lang
         $this->first = 'Primeira';
         $this->last = 'Última';
         $this->reload = 'Recarregar';
-        $this->setrows = '%row linhas por página';
+        $this->setrows = '%row linhas';
         $this->norows = 'Nenhum registro encontrado';
         $this->error = 'Um erro ocorreu durante a requisição dos dados, tente novamente';
     }
