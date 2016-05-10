@@ -35,11 +35,18 @@ class Response extends Format\Table
     private $custom_params = [];
 
     /**
-     * Numer of cols send by request
+     * Cols send by request
      *
-     * @var int
+     * @var int|array
      */
     private $table_cols;
+
+    /**
+     * Responsive config
+     *
+     * @var bool
+     */
+    private $responsive;
 
     /**
      * List of VectorDev\AjaxTable\Row
@@ -78,11 +85,11 @@ class Response extends Format\Table
     public function addRow(Row $Row)
     {
         if ($this->getNumRows() >= $this->rows) {
-            exit('Number of rows expect number allowed');
+            throw new Exception('Number of rows expect number allowed');
         }
 
-        if ($Row->getNumCells() != $this->getNumCols()) {
-            exit('Number of GridCell on Row expect number allowed');
+        if ($Row->getNumCells() != $this->getNumColumns()) {
+            throw new Exception('Number of GridCell on Row expect number allowed');
         }
 
         $this->table_rows[] = $Row;
@@ -103,9 +110,19 @@ class Response extends Format\Table
      *
      * @return int
      */
+    public function getNumColumns()
+    {
+        return $this->responsive ? count($this->table_cols) : $this->table_cols;
+    }
+
+    /**
+     * getNumColumns alias
+     *
+     * @return int
+     */
     public function getNumCols()
     {
-        return $this->table_cols;
+        return $this->getNumColumns();
     }
 
     /**
@@ -136,7 +153,7 @@ class Response extends Format\Table
     public function setRows($rows)
     {
         if (!(filter_var($rows, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false)) {
-            exit('Invalid rows');
+            throw new Exception('Invalid rows');
         }
         $this->rows = $rows;
     }
@@ -149,7 +166,7 @@ class Response extends Format\Table
     public function setRowsTotal($rows_total)
     {
         if (!(filter_var($rows_total, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]) !== false)) {
-            exit('Invalid rows total');
+            throw new Exception('Invalid rows total');
         }
         $this->rows_total = $rows_total;
     }
@@ -183,7 +200,7 @@ class Response extends Format\Table
                 $params = $_GET[self::REQUEST_ARRAY];
                 break;
             default:
-                exit('Unknow request method');
+                throw new Exception('Unknow request method');
                 break;
         }
         return $params;
@@ -208,7 +225,7 @@ class Response extends Format\Table
                 $params = $_GET;
                 break;
             default:
-                exit('Unknow request method');
+                throw new Exception('Unknow request method');
                 break;
         }
         unset($params[self::REQUEST_ARRAY]);
@@ -241,7 +258,12 @@ class Response extends Format\Table
             $this->custom_params = $this->getCustomParams();
         }
 
-        $this->table_cols = (int) $this->ajaxtable_params['cols'];
+        $this->responsive = $this->ajaxtable_params['responsive'] == 'true';
+        if ($this->responsive) {
+            $this->table_cols = json_decode($this->ajaxtable_params['cols']);
+        } else {
+            $this->table_cols = (int) $this->ajaxtable_params['cols'];
+        }
         $this->page = (int) $this->ajaxtable_params['page'];
         $this->rows = (int) $this->ajaxtable_params['rows'];
         $this->setSort($this->ajaxtable_params['sortCol'], $this->ajaxtable_params['sortOrder']);
@@ -365,7 +387,11 @@ class Response extends Format\Table
     {
         $html = [];
         foreach ($this->table_rows as $Row) {
-            $html[] = $Row->getHtml();
+            if ($this->responsive) {
+                $html[] = $Row->getHtml($this->table_cols);
+            } else {
+                $html[] = $Row->getHtml();
+            }
         }
         return implode('', $html);
     }

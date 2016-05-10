@@ -168,6 +168,13 @@ class Classes
     private $sortdesc = 'ajaxtable-sort-desc';
 
     /**
+     * Table sort arrow class
+     *
+     * @var string
+     */
+    private $sortarrow = 'ajaxtable-sort-arrow';
+
+    /**
      * Set class on object
      *
      * @param string $name
@@ -225,6 +232,7 @@ class Classes
         $array['classCols'] = $this->cols;
         $array['classSortAsc'] = $this->sortasc;
         $array['classSortDesc'] = $this->sortdesc;
+        $array['classSortArrow'] = $this->sortarrow;
 
         return $array;
     }

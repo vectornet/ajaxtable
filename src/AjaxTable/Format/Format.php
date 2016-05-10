@@ -57,6 +57,11 @@ abstract class Format
     const SLUG_CHARACTER = 'UTF-8';
 
     /**
+     * Default data element for responsive
+     */
+    const RESPONSIVE_DATA = 'th';
+
+    /**
      * Set html element id
      *
      * @param string $id

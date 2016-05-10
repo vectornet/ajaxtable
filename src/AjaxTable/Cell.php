@@ -40,10 +40,14 @@ class Cell extends Format\Format
     /**
      * Genetare and return html data from this cell
      *
+     * @param string $responsive_data
      * @return string
      */
-    public function getHtml()
+    public function getHtml($responsive_data = null)
     {
+        if (!is_null($responsive_data)) {
+            $this->addData(parent::RESPONSIVE_DATA, $responsive_data ? $responsive_data : 'Data');
+        }
         return '<td'.(parent::getHtml() ? ' '.parent::getHtml() : '').'>'.$this->text.'</td>';
     }
 }

@@ -25,9 +25,11 @@
                 page: 1,
                 rows: 10,
                 rowsJump: 3,
+                rowsJumpResponsive: 1,
                 rowsOptions: [5, 10, 20, 50, 100, 500],
                 sortOrder: 'ASC',
                 paramToSort: null,
+                responsive: false,
                 refreshCallbackFunctionBefore: null,
                 refreshCallbackFunctionAfter: null
             };
@@ -55,9 +57,7 @@
                 classCols: 'ajaxtable-cols',
                 classSortAsc: 'ajaxtable-sort-asc',
                 classSortDesc: 'ajaxtable-sort-desc',
-                classSortArrow: 'ajaxtable-sort-arrow',
-                classSortArrowAsc: 'ajaxtable-sort-arrow-asc',
-                classSortArrowDesc: 'ajaxtable-sort-arrow-desc'
+                classSortArrow: 'ajaxtable-sort-arrow'
             };
 
             var event_options = {
@@ -118,7 +118,7 @@
             var html_colgroups = '';
 
             for (i = 0; i < this.getOption('cols').length ; i++) {
-                html_cols += '<td';
+                html_cols += '<th';
                 if (this.getOption('cols')[i].headerId)
                     html_cols += ' id="'+this.getOption('cols')[i].headerId+'"';
                 if (this.getOption('cols')[i].headerClass)
@@ -140,7 +140,7 @@
                         html_cols += this.getOption('cols')[i].headerTitle;
                 }
 
-                html_cols += '</td>';
+                html_cols += '</th>';
 
                 html_colgroups += '<colgroup';
                 if (this.getOption('cols')[i].colgroupClass)
@@ -202,8 +202,20 @@
             this.removeClass(this.getOption('classError'));
             this.addClass(this.getOption('classLoading'));
 
+            if (this.getOption('responsive')) {
+                var cols = [];
+                for (i = 0; i < this.getOption('cols').length ; i++) {
+                    cols.push(this.getOption('cols')[i].headerTitle);
+                }
+                cols = JSON.stringify(cols);
+            } else {
+                var cols = this.getOption('cols').length;
+            }
+
+
             var params = $.extend(this.getOption('params'), {
-                'ajaxTableOptions[cols]': this.getOption('cols').length,
+                'ajaxTableOptions[responsive]': this.getOption('responsive'),
+                'ajaxTableOptions[cols]': cols,
                 'ajaxTableOptions[rows]': this.getOption('rows'),
                 'ajaxTableOptions[page]': this.getOption('page'),
                 'ajaxTableOptions[sortOrder]': this.getOption('sortOrder'),
@@ -343,10 +355,13 @@
             }
 
             var jumps = '';
-            for (var i = -this.getOption('rowsJump'); i <= this.getOption('rowsJump'); i++) {
+
+            var rowsJump = this.getOption('responsive') && screen.width <= 480 ? this.getOption('rowsJumpResponsive') : this.getOption('rowsJump');
+
+            for (var i = -rowsJump; i <= rowsJump; i++) {
                 if (parseInt(this.getOption('page')) + i <= this.getOption('json').totalPages && parseInt(this.getOption('page')) + i > 0) {
                     if (i == 0)
-                        jumps += '<li'+((this.getOption('classPaginationCurrentPage')) ? ' class="'+this.getOption('classPaginationCurrentPage')+'"' : '')+'><a href="javascript://">'+parseInt(this.getOption('page'))+'</a></li>';
+                        jumps += '<li'+((this.getOption('classPaginationCurrentPage')) ? ' class="'+this.getOption('classPaginationCurrentPage')+'"' : '')+'><a>'+parseInt(this.getOption('page'))+'</a></li>';
                     else
                         jumps += '<li'+((this.getOption('classPaginationJumps')) ? ' class="'+this.getOption('classPaginationJumps')+'"' : '')+'><a href="javascript://" onclick="$(\'#'+ this.attr('id') +'\').jumpToPage('+(parseInt(this.getOption('page')) + i)+');">'+(parseInt(this.getOption('page')) + i)+'</a></li>';
                 }

@@ -48,6 +48,8 @@ class Conf extends Format\Table
      */
     private $params = [];
 
+    private $responsive = false;
+
     /**
      * List of rows per page user can change on view
      *
@@ -217,6 +219,26 @@ class Conf extends Format\Table
     }
 
     /**
+     * Enable responsive
+     *
+     * @return void
+     */
+    public function enableResponsive()
+    {
+        $this->responsive = true;
+    }
+
+    /**
+     * Disable responsive
+     *
+     * @return void
+     */
+    public function disableResponsive()
+    {
+        $this->responsive = false;
+    }
+
+    /**
      * get json config data from all VectorDev\AjaxTable\Col array data on list
      *
      * @param bool $humanize
@@ -273,6 +295,9 @@ class Conf extends Format\Table
         if (!is_null($this->sort_order)) {
             $array['sortOrder'] = $this->sort_order;
         }
+
+        // responsive conf
+        $array['responsive'] = $this->responsive;
 
         // lang conf
         if ($this->Lang) {

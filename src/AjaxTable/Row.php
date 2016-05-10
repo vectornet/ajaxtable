@@ -67,14 +67,21 @@ class Row extends Format\Format
     /**
      * Genetare and return html data from this row and cells on list
      *
+     * @param array $responsive_data
      * @return string
      */
-    public function getHtml()
+    public function getHtml(array $responsive_data = null)
     {
         $html = [];
         $html[] = '<tr'.(parent::getHtml() ? ' '.parent::getHtml() : '').'>';
-        foreach ($this->table_cells as $Cell) {
-            $html[] = $Cell->getHtml();
+        if ($responsive_data) {
+            for ($i = 0; $i < count($this->table_cells); $i++) {
+                $html[] = $this->table_cells[$i]->getHtml($responsive_data[$i]);
+            }
+        } else {
+            foreach ($this->table_cells as $Cell) {
+                $html[] = $Cell->getHtml();
+            }
         }
         $html[] = '</tr>';
         return implode('', $html);

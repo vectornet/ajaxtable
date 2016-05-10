@@ -83,7 +83,7 @@ abstract class Table
     public function setRequestMethod($request_method)
     {
         if (!in_array($request_method, self::getRequestMethodsAvaliable())) {
-            exit('Invalid request method');
+            throw new Exception('Invalid request method');
         }
         $this->request_method = $request_method;
     }
@@ -148,7 +148,7 @@ abstract class Table
     public function setSort($sort_col, $sort_order)
     {
         if (!in_array($sort_order, self::getSortOptions())) {
-            exit('Unkown sort option');
+            throw new Exception('Unkown sort option');
         }
         $this->sort_col = $sort_col;
         $this->sort_order = $sort_order;
@@ -183,7 +183,7 @@ abstract class Table
     public function setPage($page = null)
     {
         if (!filter_var($page, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])) {
-            exit('Invalid page');
+            throw new Exception('Invalid page');
         }
         $this->page = (int) $page;
     }
