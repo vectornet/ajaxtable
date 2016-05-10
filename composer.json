@@ -2,9 +2,8 @@
     "name": "vectordev/ajaxtable",
     "description": "AjaxTable Library",
     "homepage": "https://github.com/vectornet/ajaxtable",
-    "version": "dev-master",
     "keywords": ["ajaxtable", "ajaxgrid"],
-    "type": "lib",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -12,13 +11,12 @@
             "email": "me+github@redrat.com.br"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
-        "php": ">= 5.4",
+        "php": ">= 5.4"
     },
     "autoload": {
         "psr-4": {
             "VectorDev\\AjaxTable\\": "src/"
         }
-    },
+    }
 }
