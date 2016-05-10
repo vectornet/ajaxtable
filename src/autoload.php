@@ -1,6 +1,6 @@
 <?php
 /**
- * Autoloader PSR-4 like
+ * Autoloader
  *
  * @author Joubert <eu@redrat.com.br>
  * @copyright Copyright (c) 2016 Vector Internet Business and AjaxTable contributors
@@ -9,7 +9,7 @@
  * @see http://www.vectornet.com.br
  */
 
-namespace VectorDev;
+namespace VectorDev\AjaxTable;
 
 spl_autoload_register(function ($class) {
     if (strpos($class, __NAMESPACE__.'\\') === 0) {
