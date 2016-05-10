@@ -4,7 +4,7 @@
  * @author Joubert <eu@redrat.com.br>
  * @copyright Copyright (c) 2016 Vector Internet Business and AjaxTable contributors
  * @license: MIT
- * @requrire: jQuery 1.4 or later
+ * @requrire: jQuery 1.6 or later
  * http://www.vectornet.com.br
  * https://github.com/vectornet/ajaxtable/
  */
@@ -181,11 +181,7 @@
          * @returns {void}
          */
         setOption: function(param, value) {
-            if (parseFloat(jQuery.fn.jquery) >= 1.6) {
-                this['prop']('ajaxTableOptions')[param] = value;
-            } else {
-                this['attr']('ajaxTableOptions')[param] = value;
-            }
+            this['prop']('ajaxTableOptions')[param] = value;
         },
 
         /**
@@ -195,11 +191,7 @@
          * @returns {mixed}
          */
         getOption: function(param) {
-            if (parseFloat(jQuery.fn.jquery) >= 1.6) {
-                return this['prop']('ajaxTableOptions')[param];
-            } else {
-                return this['attr']('ajaxTableOptions')[param];
-            }
+            return this['prop']('ajaxTableOptions')[param];
         },
 
         /**
