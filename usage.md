@@ -50,8 +50,8 @@ foreach($all_data as $data) {
 	$CellUsername = new VectorDev\AjaxTable\Cell($data['user_username']);
 	$CellEmail = new VectorDev\AjaxTable\Cell($data['user_mail']);
 	$CellAge = new VectorDev\AjaxTable\Cell($data['user_age']);
+	
 	$Row = new VectorDev\AjaxTable\Row($CellUsername, $CellEmail, $CellAge);
-
 	$Response->addRow($Row);
 }
 
