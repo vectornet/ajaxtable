@@ -204,6 +204,7 @@
          */
         setRequestParam: function(param, value) {
             this['prop']('ajaxTableOptions')['params_new'][param] = value;
+            this.setOption('page', 1);
         },
 
         /**
@@ -233,6 +234,7 @@
          */
         clearRequestParams: function() {
             this['prop']('ajaxTableOptions')['params_new'] = {};
+            this.setOption('page', 1);
         },
 
         /**
