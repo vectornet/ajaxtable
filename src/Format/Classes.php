@@ -154,6 +154,13 @@ class Classes
     private $cols = 'ajaxtable-cols';
 
     /**
+     * Table col sortable class
+     *
+     * @var string
+     */
+    private $colsortable = 'ajaxtable-col-sortable';
+
+    /**
      * Table sort asc class
      *
      * @var string
@@ -230,6 +237,7 @@ class Classes
         $array['classPaginationJumps'] = $this->paginationjumps;
         $array['classPaginationCurrentPage'] = $this->paginationcurrentpage;
         $array['classCols'] = $this->cols;
+        $array['classColSortable'] = $this->colsortable;
         $array['classSortAsc'] = $this->sortasc;
         $array['classSortDesc'] = $this->sortdesc;
         $array['classSortArrow'] = $this->sortarrow;

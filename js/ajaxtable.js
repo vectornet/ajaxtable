@@ -57,6 +57,7 @@
                 classPaginationJumps: 'ajaxtable-pagination-jumps',
                 classPaginationCurrentPage: 'ajaxtable-pagination-currentpage',
                 classCols: 'ajaxtable-cols',
+                classColSortable: 'ajaxtable-col-sortable',
                 classSortAsc: 'ajaxtable-sort-asc',
                 classSortDesc: 'ajaxtable-sort-desc',
                 classSortArrow: 'ajaxtable-sort-arrow'
@@ -123,8 +124,14 @@
                 html_cols += '<th';
                 if (this.getOption('cols')[i].headerId)
                     html_cols += ' id="'+this.getOption('cols')[i].headerId+'"';
+
+                var class_element = [];
+                if (this.getOption('cols')[i].sortable)
+                    class_element.push(this.getOption('classColSortable'));
                 if (this.getOption('cols')[i].headerClass)
-                    html_cols += ' class="'+this.getOption('cols')[i].headerClass+'"';
+                    class_element.push(this.getOption('cols')[i].headerClass);
+                if (class_element.length > 0)
+                    html_cols += ' class="'+class_element.join(' ')+'"';
                 html_cols += '>';
 
                 if (this.getOption('cols')[i].headerTitle) {

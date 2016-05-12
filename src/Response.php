@@ -85,11 +85,11 @@ class Response extends Format\Table
     public function addRow(Row $Row)
     {
         if ($this->getNumRows() >= $this->rows) {
-            throw new Exception('Number of rows expect number allowed');
+            throw new \Exception('Number of rows expect number allowed');
         }
 
         if ($Row->getNumCells() != $this->getNumColumns()) {
-            throw new Exception('Number of GridCell on Row expect number allowed');
+            throw new \Exception('Number of GridCell on Row expect number allowed');
         }
 
         $this->table_rows[] = $Row;
@@ -153,7 +153,7 @@ class Response extends Format\Table
     public function setRows($rows)
     {
         if (!(filter_var($rows, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) !== false)) {
-            throw new Exception('Invalid rows');
+            throw new \Exception('Invalid rows');
         }
         $this->rows = $rows;
     }
@@ -166,7 +166,7 @@ class Response extends Format\Table
     public function setRowsTotal($rows_total)
     {
         if (!(filter_var($rows_total, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]) !== false)) {
-            throw new Exception('Invalid rows total');
+            throw new \Exception('Invalid rows total');
         }
         $this->rows_total = $rows_total;
     }
@@ -200,7 +200,7 @@ class Response extends Format\Table
                 $params = $_GET[self::REQUEST_ARRAY];
                 break;
             default:
-                throw new Exception('Unknow request method');
+                throw new \Exception('Unknow request method');
                 break;
         }
         return $params;
@@ -225,7 +225,7 @@ class Response extends Format\Table
                 $params = $_GET;
                 break;
             default:
-                throw new Exception('Unknow request method');
+                throw new \Exception('Unknow request method');
                 break;
         }
         unset($params[self::REQUEST_ARRAY]);
