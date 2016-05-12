@@ -23,6 +23,7 @@
                 method: 'POST',
                 url: '',
                 params: {},
+                params_new: {},
                 page: 1,
                 rows: 10,
                 rowsJump: 3,
@@ -195,14 +196,53 @@
         },
 
         /**
-         * Get data fron ajax and put on table
+         * Set custom param for request
+         *
+         * @param {string} param
+         * @param {mixed} value
+         * @returns {void}
+         */
+        setRequestParam: function(param, value) {
+            this['prop']('ajaxTableOptions')['params_new'][param] = value;
+            this.setOption('page', 1);
+        },
+
+        /**
+         * Get custom param for request
+         *
+         * @param {string} param
+         * @returns {mixed}
+         */
+        getRequestParam: function(param) {
+            return this['prop']('ajaxTableOptions')['params_new'][param];
+        },
+
+        /**
+         * Get custom param for request set on config
+         *
+         * @param {string} param
+         * @returns {mixed}
+         */
+        getDefaultRequestParam: function(param) {
+            return this['prop']('ajaxTableOptions')['params'][param];
+        },
+
+        /**
+         * Clear custom param list for request
          *
          * @returns {void}
          */
-        loadAjaxData: function() {
-            this.removeClass(this.getOption('classError'));
-            this.addClass(this.getOption('classLoading'));
+        clearRequestParams: function() {
+            this['prop']('ajaxTableOptions')['params_new'] = {};
+            this.setOption('page', 1);
+        },
 
+        /**
+         * Get ajaxtable params for request
+         *
+         * @returns {object}
+         */
+        getAjaxTableRequestParams: function() {
             if (this.getOption('responsive')) {
                 var cols = [];
                 for (i = 0; i < this.getOption('cols').length ; i++) {
@@ -213,16 +253,26 @@
                 var cols = this.getOption('cols').length;
             }
 
-
-            var params = $.extend(this.getOption('params'), {
+            return {
                 'ajaxTableOptions[responsive]': this.getOption('responsive'),
                 'ajaxTableOptions[cols]': cols,
                 'ajaxTableOptions[rows]': this.getOption('rows'),
                 'ajaxTableOptions[page]': this.getOption('page'),
                 'ajaxTableOptions[sortOrder]': this.getOption('sortOrder'),
                 'ajaxTableOptions[sortCol]': (this.getOption('sortCol') == null) ? '' : this.getOption('sortCol')
-            });
+            };
+        },
 
+        /**
+         * Get data fron ajax and put on table
+         *
+         * @returns {void}
+         */
+        loadAjaxData: function() {
+            this.removeClass(this.getOption('classError'));
+            this.addClass(this.getOption('classLoading'));
+
+            var params = $.extend( false, this.getAjaxTableRequestParams(), this.getOption('params_new'), this.getOption('params'));
             $.ajax({
                 context: this,
                 url: this.getOption('url'),
@@ -242,7 +292,6 @@
 
                     this.removeClass(this.getOption('classLoading'));
                     this.addClass(this.getOption('classError'));
-
                 },
                 success: function(data, textStatus, XMLHttpRequest) {
                     this.setOption('json', data);
