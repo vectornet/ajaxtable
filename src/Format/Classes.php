@@ -18,161 +18,180 @@ class Classes
      *
      * @var string
      */
-    private $table = 'ajaxtable';
+    private $table = 'table';
 
     /**
      * Head section class
      *
      * @var string
      */
-    private $head = 'ajaxtable-head';
+    private $head = 'head';
 
     /**
      * Body section class
      *
      * @var string
      */
-    private $body = 'ajaxtable-body';
+    private $body = 'body';
 
     /**
      * Foot section class
      *
      * @var string
      */
-    private $foot = 'ajaxtable-foot';
+    private $foot = 'foot';
 
     /**
      * Loading class
      *
      * @var string
      */
-    private $loading = 'ajaxtable-loading';
+    private $loading = 'loading';
 
     /**
      * Error class
      *
      * @var string
      */
-    private $error = 'ajaxtable-error';
+    private $error = 'error';
 
     /**
      * No result class
      *
      * @var string
      */
-    private $norows = 'ajaxtable-norows';
+    private $norows = 'norows';
 
     /**
      * Pagination on head class
      *
      * @var string
      */
-    private $paginationhead = 'ajaxtable-pagination-head';
+    private $paginationhead = 'pagination-head';
 
     /**
      * Pagination on foot class
      *
      * @var string
      */
-    private $paginationfoot = 'ajaxtable-pagination-foot';
+    private $paginationfoot = 'pagination-foot';
 
     /**
      * Pagination container class
      *
      * @var string
      */
-    private $paginationcontainer = 'ajaxtable-pagination-container';
+    private $paginationcontainer = 'pagination-container';
 
     /**
      * Pagination total rows class
      *
      * @var string
      */
-    private $paginationtotalrows = 'ajaxtable-pagination-totalrows';
+    private $paginationtotalrows = 'pagination-totalrows';
 
     /**
      * Pagination previous button class
      *
      * @var string
      */
-    private $paginationprevious = 'ajaxtable-pagination-previous';
+    private $paginationprevious = 'pagination-previous';
 
     /**
      * Pagination next button class
      *
      * @var string
      */
-    private $paginationnext = 'ajaxtable-pagination-next';
+    private $paginationnext = 'pagination-next';
 
     /**
      * Pagination first button class
      *
      * @var string
      */
-    private $paginationfirst = 'ajaxtable-pagination-first';
+    private $paginationfirst = 'pagination-first';
 
     /**
      * Pagination last button class
      *
      * @var string
      */
-    private $paginationlast = 'ajaxtable-pagination-last';
+    private $paginationlast = 'pagination-last';
 
     /**
      * Pagination reload button class
      *
      * @var string
      */
-    private $paginationreload = 'ajaxtable-pagination-reload';
+    private $paginationreload = 'pagination-reload';
 
     /**
      * Pagination rows per page select class
      *
      * @var string
      */
-    private $paginationsetrows = 'ajaxtable-pagination-setrows';
+    private $paginationsetrows = 'pagination-setrows';
 
     /**
      * Pagination jumps button class
      *
      * @var string
      */
-    private $paginationjumps = 'ajaxtable-pagination-jumps';
+    private $paginationjumps = 'pagination-jumps';
 
     /**
      * Pagination current page button class
      *
      * @var string
      */
-    private $paginationcurrentpage = 'ajaxtable-pagination-currentpage';
+    private $paginationcurrentpage = 'pagination-currentpage';
 
     /**
      * Table cols class
      *
      * @var string
      */
-    private $cols = 'ajaxtable-cols';
+    private $cols = 'cols';
+
+    /**
+     * Table col sortable class
+     *
+     * @var string
+     */
+    private $colsortable = 'col-sortable';
 
     /**
      * Table sort asc class
      *
      * @var string
      */
-    private $sortasc = 'ajaxtable-sort-asc';
+    private $sortasc = 'sort-asc';
 
     /**
      * Table sort desc class
      *
      * @var string
      */
-    private $sortdesc = 'ajaxtable-sort-desc';
+    private $sortdesc = 'sort-desc';
 
     /**
      * Table sort arrow class
      *
      * @var string
      */
-    private $sortarrow = 'ajaxtable-sort-arrow';
+    private $sortarrow = 'sort-arrow';
+
+    /**
+     * Css prefix
+     *
+     * @var string
+     */
+    private $prefix = self::PREFIX;
+
+    /**
+     * Ajaxtable default prefix
+     */
+    const PREFIX = 'ajaxtable';
 
     /**
      * Set class on object
@@ -184,7 +203,7 @@ class Classes
     public function __set($name, $value)
     {
         if (isset($this->$name)) {
-            $this->$name = \VectorDev\TableFormat::slug($value);
+            $this->$name = Format::slug($value);
         }
     }
 
@@ -210,29 +229,30 @@ class Classes
     {
         $array = [];
 
-        $array['classTable'] = $this->table;
-        $array['classHead'] = $this->head;
-        $array['classBody'] = $this->body;
-        $array['classFoot'] = $this->foot;
-        $array['classLoading'] = $this->loading;
-        $array['classError'] = $this->error;
-        $array['classNoRows'] = $this->norows;
-        $array['classPaginationHead'] = $this->paginationhead;
-        $array['classPaginationFoot'] = $this->paginationfoot;
-        $array['classPaginationContainer'] = $this->paginationcontainer;
-        $array['classPaginationTotalRows'] = $this->paginationtotalrows;
-        $array['classPaginationPrevious'] = $this->paginationprevious;
-        $array['classPaginationNext'] = $this->paginationnext;
-        $array['classPaginationFirst'] = $this->paginationfirst;
-        $array['classPaginationLast'] = $this->paginationlast;
-        $array['classPaginationReload'] = $this->paginationreload;
-        $array['classPaginationSetRows'] = $this->paginationsetrows;
-        $array['classPaginationJumps'] = $this->paginationjumps;
-        $array['classPaginationCurrentPage'] = $this->paginationcurrentpage;
-        $array['classCols'] = $this->cols;
-        $array['classSortAsc'] = $this->sortasc;
-        $array['classSortDesc'] = $this->sortdesc;
-        $array['classSortArrow'] = $this->sortarrow;
+        $array['classTable'] = ($this->prefix ? $this->prefix.'-' : '').$this->table;
+        $array['classHead'] = ($this->prefix ? $this->prefix.'-' : '').$this->head;
+        $array['classBody'] = ($this->prefix ? $this->prefix.'-' : '').$this->body;
+        $array['classFoot'] = ($this->prefix ? $this->prefix.'-' : '').$this->foot;
+        $array['classLoading'] = ($this->prefix ? $this->prefix.'-' : '').$this->loading;
+        $array['classError'] = ($this->prefix ? $this->prefix.'-' : '').$this->error;
+        $array['classNoRows'] = ($this->prefix ? $this->prefix.'-' : '').$this->norows;
+        $array['classPaginationHead'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationhead;
+        $array['classPaginationFoot'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationfoot;
+        $array['classPaginationContainer'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationcontainer;
+        $array['classPaginationTotalRows'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationtotalrows;
+        $array['classPaginationPrevious'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationprevious;
+        $array['classPaginationNext'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationnext;
+        $array['classPaginationFirst'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationfirst;
+        $array['classPaginationLast'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationlast;
+        $array['classPaginationReload'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationreload;
+        $array['classPaginationSetRows'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationsetrows;
+        $array['classPaginationJumps'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationjumps;
+        $array['classPaginationCurrentPage'] = ($this->prefix ? $this->prefix.'-' : '').$this->paginationcurrentpage;
+        $array['classCols'] = ($this->prefix ? $this->prefix.'-' : '').$this->cols;
+        $array['classColSortable'] = ($this->prefix ? $this->prefix.'-' : '').$this->colsortable;
+        $array['classSortAsc'] = ($this->prefix ? $this->prefix.'-' : '').$this->sortasc;
+        $array['classSortDesc'] = ($this->prefix ? $this->prefix.'-' : '').$this->sortdesc;
+        $array['classSortArrow'] = ($this->prefix ? $this->prefix.'-' : '').$this->sortarrow;
 
         return $array;
     }
