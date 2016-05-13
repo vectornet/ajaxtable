@@ -20,7 +20,10 @@ require(__DIR__.'/ajaxtable/src/autoload.php');
 if (isset($_REQUEST['action'])) {
     switch ($_REQUEST['action']) {
         case 'list':
-            $conn = mysqli_connect('localhost', 'root', 'password', 'numbers_list');
+            /*
+             * With this example have numbers.sql for you to play
+             */
+            $conn = mysqli_connect('localhost', 'your-awesome-root-user', 'with-his-awesome-password', 'and-awesome-database');
             $conn->query('SET CHARACTER_SET utf8');
             $conn->query('SET NAMES utf8');
 
@@ -44,7 +47,6 @@ if (isset($_REQUEST['action'])) {
              * You can try cause error to see that AjaxTable will understand the error and display a message in view
              */
             //$whyguy = 4 / 0;
-
 
             /*
              * AjaxTable need how many lines in total to build pagination, then you set this
