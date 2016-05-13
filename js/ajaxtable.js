@@ -37,7 +37,7 @@
             };
 
             var format_options = {
-                classTable: 'ajaxtable',
+                classTable: 'ajaxtable-table',
                 classHead: 'ajaxtable-head',
                 classBody: 'ajaxtable-body',
                 classFoot: 'ajaxtable-foot',
