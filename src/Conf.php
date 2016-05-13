@@ -48,7 +48,26 @@ class Conf extends Format\Table
      */
     private $params = [];
 
+    /**
+     * Enable or disable reponsive mode
+     *
+     * @var bool
+     */
     private $responsive = false;
+
+    /**
+     * Javascript function to run before ajax request
+     *
+     * @var string
+     */
+    private $js_function_before;
+
+    /**
+     * Javascript function to run after ajax request
+     *
+     * @var string
+     */
+    private $js_function_after;
 
     /**
      * List of rows per page user can change on view
@@ -238,6 +257,16 @@ class Conf extends Format\Table
         $this->responsive = false;
     }
 
+    public function setJsFunctionBefore($function)
+    {
+        $this->js_function_before = $function;
+    }
+
+    public function setJsFunctionAfter($function)
+    {
+        $this->js_function_after = $function;
+    }
+
     /**
      * get json config data from all VectorDev\AjaxTable\Col array data on list
      *
@@ -272,6 +301,12 @@ class Conf extends Format\Table
         }
         if ($this->params) {
             $array['params'] = $this->params;
+        }
+        if ($this->js_function_before) {
+            $array['refreshCallbackFunctionBefore'] = $this->js_function_before;
+        }
+        if ($this->js_function_after) {
+            $array['refreshCallbackFunctionAfter'] = $this->js_function_after;
         }
         $array['cols'] = $this->getArrayColumn();
 

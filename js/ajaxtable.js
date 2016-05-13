@@ -170,15 +170,23 @@
          * @param {type} param
          * @returns {void}
          */
-        refresh: function(type, param) {
-            if (typeof this.getOption('refreshCallbackFunctionBefore') === 'function')
-                this.getOption('refreshCallbackFunctionBefore')(this, type, param);
+        refresh: function() {
+            if (typeof this.getOption('refreshCallbackFunctionBefore') === 'function') {
+                this.getOption('refreshCallbackFunctionBefore')();
+            } else if (this.getOption('refreshCallbackFunctionBefore')) {
+                var func = this.getOption('refreshCallbackFunctionBefore');
+                window[func]();
+            }
 
             this.loadAjaxData();
             this.bindEventElements();
 
-            if (typeof this.getOption('refreshCallbackFunctionAfter') === 'function')
-                this.getOption('refreshCallbackFunctionAfter')(this, type, param);
+            if (typeof this.getOption('refreshCallbackFunctionAfter') === 'function') {
+                this.getOption('refreshCallbackFunctionAfter')();
+            } else if (this.getOption('refreshCallbackFunctionAfter')) {
+                var func = this.getOption('refreshCallbackFunctionAfter');
+                window[func]();
+            }
         },
 
         /**
