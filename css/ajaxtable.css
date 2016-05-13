@@ -8,7 +8,7 @@
  * https://github.com/vectornet/ajaxtable/
  */
 
-table.ajaxtable {
+table.ajaxtable-table {
     font-family: "Helvetica Neue", Helvetica, Arial;
     font-size: 14px;
     margin: 0 0 40px 0;
@@ -18,7 +18,7 @@ table.ajaxtable {
     border-collapse: collapse;
 }
 
-table.ajaxtable thead.ajaxtable-head tr.ajaxtable-cols th {
+table.ajaxtable-table thead.ajaxtable-head tr.ajaxtable-cols th {
     padding: 5px 10px;
     font-weight: 900;
     color: #fff;
@@ -26,74 +26,74 @@ table.ajaxtable thead.ajaxtable-head tr.ajaxtable-cols th {
     background: #2980b9;
 }
 
-table.ajaxtable thead.ajaxtable-head tr.ajaxtable-cols th a {
+table.ajaxtable-table thead.ajaxtable-head tr.ajaxtable-cols th a {
     color: #fff;
     text-decoration: none;
 }
 
-table.ajaxtable tbody.ajaxtable-body tr:nth-child(odd) td {
+table.ajaxtable-table tbody.ajaxtable-body tr:nth-child(odd) td {
     background: #f6f6f6;
 }
 
-table.ajaxtable tbody.ajaxtable-body tr:nth-child(even) td {
+table.ajaxtable-table tbody.ajaxtable-body tr:nth-child(even) td {
     background: #e9e9e9;
 }
 
-table.ajaxtable tbody.ajaxtable-body tr:nth-child(odd):hover td, table.ajaxtable tbody.ajaxtable-body tr:nth-child(even):hover td{
+table.ajaxtable-table tbody.ajaxtable-body tr:nth-child(odd):hover td, table.ajaxtable-table tbody.ajaxtable-body tr:nth-child(even):hover td{
     background: #cecece;
 }
 
-table.ajaxtable tbody.ajaxtable-body tr td {
+table.ajaxtable-table tbody.ajaxtable-body tr td {
     padding: 10px 8px;
     display: table-cell;
 }
 
-table.ajaxtable div.ajaxtable-pagination-container {
+table.ajaxtable-table div.ajaxtable-pagination-container {
     max-width: 60%;
     padding: 15px;
     float: left;
 }
 
-table.ajaxtable div.ajaxtable-pagination-container ul {
+table.ajaxtable-table div.ajaxtable-pagination-container ul {
     list-style-type: none;
     display: inline-block;
     padding: 0;
     margin: 0;
 }
 
-table.ajaxtable div.ajaxtable-pagination-container ul li {
+table.ajaxtable-table div.ajaxtable-pagination-container ul li {
     display: inline;
 }
 
-table.ajaxtable div.ajaxtable-pagination-container ul li a {
+table.ajaxtable-table div.ajaxtable-pagination-container ul li a {
     color: black;
     float: left;
     padding: 4px 10px;
     text-decoration: none;
 }
 
-table.ajaxtable div.ajaxtable-pagination-container ul li.ajaxtable-pagination-currentpage a {
+table.ajaxtable-table div.ajaxtable-pagination-container ul li.ajaxtable-pagination-currentpage a {
     background-color: #2980b9;
     color: white;
 }
 
-table.ajaxtable div.ajaxtable-pagination-container ul li:not(.ajaxtable-pagination-currentpage) a:hover {
+table.ajaxtable-table div.ajaxtable-pagination-container ul li:not(.ajaxtable-pagination-currentpage) a:hover {
     background-color: #cecece;
 }
 
-table.ajaxtable div.ajaxtable-pagination-setrows {
+table.ajaxtable-table div.ajaxtable-pagination-setrows {
     max-width: 15%;
     padding: 13px;
     float: right;
 }
 
-table.ajaxtable div.ajaxtable-pagination-totalrows {
+table.ajaxtable-table div.ajaxtable-pagination-totalrows {
     max-width: 30%;
     padding: 15px;
     margin-top: 4px;
     float: right;
 }
 
-table.ajaxtable td.ajaxtable-sort-arrow {
+table.ajaxtable-table td.ajaxtable-sort-arrow {
     font-weight: bold;
 }
