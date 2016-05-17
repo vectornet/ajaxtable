@@ -10,8 +10,6 @@
  */
 
 (function($){
-    var ajaxTableOptions = {};
-
      $.fn.extend({
         /**
          * External request for ajaxtable.
@@ -21,6 +19,7 @@
          */
         ajaxTable: function(options) {
             var request_options = {
+                instance_id: '',
                 cols: [],
                 method: 'POST',
                 url: '',
@@ -37,6 +36,10 @@
                 refreshCallbackFunctionBefore: null,
                 refreshCallbackFunctionAfter: null
             };
+
+            var response_options = {
+                json_response: {}
+            };            
 
             var format_options = {
                 classTable: 'ajaxtable-table',
@@ -89,8 +92,15 @@
             };
 
             this.each(function(){
-                ajaxTableOptions = $.extend(request_options, format_options, text_options, options, event_options);
-                ajaxTableOptions.instance_id = this.id;
+                $(this).data($.extend(
+                    request_options, 
+                    response_options, 
+                    format_options, 
+                    text_options, 
+                    options, 
+                    event_options
+                ));
+                $(this).data('instance_id', this.id);
 
                 $(this).buildTableStructure();
                 $(this).buildTableCols();
@@ -200,7 +210,7 @@
          * @returns {void}
          */
         setOption: function(param, value) {
-            ajaxTableOptions[param] = value;
+            this.data(param, value);
         },
 
         /**
@@ -210,7 +220,7 @@
          * @returns {mixed}
          */
         getOption: function(param) {
-            return ajaxTableOptions[param];
+            return this.data(param);
         },
 
         /**
@@ -221,7 +231,7 @@
          * @returns {void}
          */
         setRequestParam: function(param, value) {
-            ajaxTableOptions['params_new'][param] = value;
+            this.data('params_new')[param] = value;
             this.setOption('page', 1);
         },
 
@@ -232,7 +242,7 @@
          * @returns {mixed}
          */
         getRequestParam: function(param) {
-            return ajaxTableOptions['params_new'][param];
+            return this.data('params_new')[param];
         },
 
         /**
@@ -242,7 +252,7 @@
          * @returns {mixed}
          */
         getDefaultRequestParam: function(param) {
-            return ajaxTableOptions['params'][param];
+            return this.data('params')[param];
         },
 
         /**
@@ -251,7 +261,7 @@
          * @returns {void}
          */
         clearRequestParams: function() {
-            ajaxTableOptions['params_new'] = {};
+            this.setOption('params_new', {});
             this.setOption('page', 1);
         },
 
@@ -301,7 +311,7 @@
                 async: false,
                 dataType: 'json',
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    this.setOption('json', {'totalPages': 1, 'page': 1, 'totalRecords': 0, 'html': ''});
+                    this.setOption('json_response', {'totalPages': 1, 'page': 1, 'totalRecords': 0, 'html': ''});
                     this.clearBody();
                     this.setOption('page', 1);
 
@@ -313,18 +323,18 @@
                     this.addClass(this.getOption('classError'));
                 },
                 success: function(data, textStatus, XMLHttpRequest) {
-                    this.setOption('json', data);
+                    this.setOption('json_response', data);
                     this.clearBody();
                     this.setOption('page', data.page);
 
-                    if (this.getOption('json').totalRecords > 10 && this.getOption('rows') > 10)
+                    if (this.getOption('json_response').totalRecords > 10 && this.getOption('rows') > 10)
                         $('.'+this.getOption('classPaginationHead')).html(this.getPagination());
                     else
                         $('.'+this.getOption('classPaginationHead')).html('');
                     $('.'+this.getOption('classPaginationFoot')).html(this.getPagination());
 
-                    if (this.getOption('json').totalRecords > 0)
-                        this.find('tbody').html(this.getOption('json').html);
+                    if (this.getOption('json_response').totalRecords > 0)
+                        this.find('tbody').html(this.getOption('json_response').html);
                     else
                         this.find('tbody').html(this.getNoRows());
 
@@ -358,7 +368,7 @@
          * @returns {void}
          */
         jumpToPage: function(page) {
-            if(page <= this.getOption('json').totalPages) {
+            if(page <= this.getOption('json_response').totalPages) {
                 this.setOption('page', page);
                 $(this).refresh();
             }
@@ -428,7 +438,7 @@
             var rowsJump = this.getOption('responsive') && screen.width <= 480 ? this.getOption('rowsJumpResponsive') : this.getOption('rowsJump');
 
             for (var i = -rowsJump; i <= rowsJump; i++) {
-                if (parseInt(this.getOption('page')) + i <= this.getOption('json').totalPages && parseInt(this.getOption('page')) + i > 0) {
+                if (parseInt(this.getOption('page')) + i <= this.getOption('json_response').totalPages && parseInt(this.getOption('page')) + i > 0) {
                     if (i == 0)
                         jumps += '<li'+((this.getOption('classPaginationCurrentPage')) ? ' class="'+this.getOption('classPaginationCurrentPage')+'"' : '')+'><a>'+parseInt(this.getOption('page'))+'</a></li>';
                     else
@@ -438,7 +448,7 @@
 
             html += jumps;
 
-            if(this.getOption('page') <  this.getOption('json').totalPages) {
+            if(this.getOption('page') <  this.getOption('json_response').totalPages) {
                 var next = '<li '+((this.getOption('classPaginationNext')) ? 'class="'+this.getOption('classPaginationNext')+'"' : '')+'>';
                 next += '<a href="javascript://" onclick="$(\'#'+ this.attr('id') +'\').goToNext();">'+this.getOption('textNext')+'</a>';
                 next += '</li>';
@@ -468,14 +478,14 @@
             }
             html += '</select></div>';
 
-            if (this.getOption('json').totalRecords > 0) {
+            if (this.getOption('json_response').totalRecords > 0) {
                 var rows_text = this.getOption('textTotalRows');
                 rows_text = rows_text.replace('%rowfirst', (this.getOption('rows') * this.getOption('page') + 1) - this.getOption('rows'));
-                if ((this.getOption('page') * this.getOption('rows')) > this.getOption('json').totalRecords)
-                    rows_text = rows_text.replace('%rowlast', this.getOption('json').totalRecords);
+                if ((this.getOption('page') * this.getOption('rows')) > this.getOption('json_response').totalRecords)
+                    rows_text = rows_text.replace('%rowlast', this.getOption('json_response').totalRecords);
                 else
                     rows_text = rows_text.replace('%rowlast', this.getOption('page') * this.getOption('rows'));
-                rows_text = rows_text.replace('%rowtotal', this.getOption('json').totalRecords);
+                rows_text = rows_text.replace('%rowtotal', this.getOption('json_response').totalRecords);
             } else {
                 var rows_text = this.getOption('textNoRows');
             }
@@ -515,7 +525,7 @@
          * @returns {void}
          */
         goToNext: function() {
-            this.setOption('page', (this.getOption('page') < this.getOption('json').totalPages) ? this.getOption('page') + 1 : this.getOption('json').totalPages);
+            this.setOption('page', (this.getOption('page') < this.getOption('json_response').totalPages) ? this.getOption('page') + 1 : this.getOption('json_response').totalPages);
             this.refresh();
         },
 
@@ -535,7 +545,7 @@
          * @returns {void}
          */
         goToLast: function() {
-            this.setOption('page', this.getOption('json').totalPages);
+            this.setOption('page', this.getOption('json_response').totalPages);
             this.refresh();
         },
 
