@@ -168,7 +168,7 @@ class Response extends Format\Table
         if (!(filter_var($rows_total, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]) !== false)) {
             throw new \Exception('Invalid rows total');
         }
-        $this->rows_total = $rows_total;
+        $this->rows_total = (int) $rows_total;
     }
 
     /**
