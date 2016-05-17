@@ -10,14 +10,16 @@
  */
 
 (function($){
-    $.fn.extend({
+    var ajaxTableOptions = {};
+
+     $.fn.extend({
         /**
          * External request for ajaxtable.
          *
          * @param {json} ajaxTableOptions
          * @returns {void}
          */
-        ajaxTable: function(ajaxTableOptions) {
+        ajaxTable: function(options) {
             var request_options = {
                 cols: [],
                 method: 'POST',
@@ -87,8 +89,8 @@
             };
 
             this.each(function(){
-                this.ajaxTableOptions = $.extend(request_options, format_options, text_options, ajaxTableOptions, event_options);
-                this.ajaxTableOptions.instance_id = this.id;
+                ajaxTableOptions = $.extend(request_options, format_options, text_options, options, event_options);
+                ajaxTableOptions.instance_id = this.id;
 
                 $(this).buildTableStructure();
                 $(this).buildTableCols();
@@ -120,6 +122,7 @@
             var html_cols = '';
             var html_colgroups = '';
 
+            var i = 0;
             for (i = 0; i < this.getOption('cols').length ; i++) {
                 html_cols += '<th';
                 if (this.getOption('cols')[i].headerId)
@@ -143,10 +146,10 @@
                             html_cols += this.getOption('sortOrder') === 'ASC' ? '▲' : '▼';
                         }
 
-
                         html_cols += '<span>';
-                    } else
+                    } else {
                         html_cols += this.getOption('cols')[i].headerTitle;
+                    }
                 }
 
                 html_cols += '</th>';
@@ -197,7 +200,7 @@
          * @returns {void}
          */
         setOption: function(param, value) {
-            this['prop']('ajaxTableOptions')[param] = value;
+            ajaxTableOptions[param] = value;
         },
 
         /**
@@ -207,7 +210,7 @@
          * @returns {mixed}
          */
         getOption: function(param) {
-            return this['prop']('ajaxTableOptions')[param];
+            return ajaxTableOptions[param];
         },
 
         /**
@@ -218,7 +221,7 @@
          * @returns {void}
          */
         setRequestParam: function(param, value) {
-            this['prop']('ajaxTableOptions')['params_new'][param] = value;
+            ajaxTableOptions['params_new'][param] = value;
             this.setOption('page', 1);
         },
 
@@ -229,7 +232,7 @@
          * @returns {mixed}
          */
         getRequestParam: function(param) {
-            return this['prop']('ajaxTableOptions')['params_new'][param];
+            return ajaxTableOptions['params_new'][param];
         },
 
         /**
@@ -239,7 +242,7 @@
          * @returns {mixed}
          */
         getDefaultRequestParam: function(param) {
-            return this['prop']('ajaxTableOptions')['params'][param];
+            return ajaxTableOptions['params'][param];
         },
 
         /**
@@ -248,7 +251,7 @@
          * @returns {void}
          */
         clearRequestParams: function() {
-            this['prop']('ajaxTableOptions')['params_new'] = {};
+            ajaxTableOptions['params_new'] = {};
             this.setOption('page', 1);
         },
 
@@ -260,6 +263,7 @@
         getAjaxTableRequestParams: function() {
             if (this.getOption('responsive')) {
                 var cols = [];
+                var i = 0;
                 for (i = 0; i < this.getOption('cols').length ; i++) {
                     cols.push(this.getOption('cols')[i].headerTitle);
                 }
