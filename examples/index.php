@@ -103,6 +103,7 @@ $Conf->setJsFunctionAfter('report');
              */
             $('#go').bind('click', function() {
                 $('#my-awesome-table').setRequestParam('search', $('#search').val());
+                $('#my-awesome-table').refresh();
             });
 
             /*
