@@ -86,14 +86,23 @@ if (isset($_REQUEST['action'])) {
                  * Look here, Cell support html
                  */
                 $CellEnUs = new VectorDev\AjaxTable\Cell('<b>'.$rows['en-us'].'</b>');
+                $CellEnUs->addClass('html-ruan');
 
+
+                $alert_msg = $rows['en-us'].' in brazilian is '.$rows['pt-br'];
                 /*
                  * Also javascript too!
                  */
                 $CellPtBr = new VectorDev\AjaxTable\Cell(
-                    '<span onclick="javascript:alert('.$rows['id'].');">'.$rows['pt-br'].'</span>'
+                    '<span onclick="javascript:alert(\''.$alert_msg.'\');">'.$rows['pt-br'].'</span>'
                 );
-                $CellEsEs = new VectorDev\AjaxTable\Cell($rows['es-es']);
+                $CellPtBr->addClass('javascript-link', 'javascript-href');
+
+                $CellEsEs = new VectorDev\AjaxTable\Cell('Click to see');
+                $CellEsEs->addClass('javascript-action');
+                $CellEsEs->addData('number', $rows['id']);
+                $CellEsEs->addData('spanish', $rows['es-es']);
+
                 $CellFrFr = new VectorDev\AjaxTable\Cell($rows['fr-fr']);
                 $CellDeDe = new VectorDev\AjaxTable\Cell($rows['de-de']);
                 $CellJaJp = new VectorDev\AjaxTable\Cell($rows['ja-jp']);

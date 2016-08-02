@@ -103,6 +103,7 @@ $Conf->setJsFunctionAfter('report');
              */
             $('#go').bind('click', function() {
                 $('#my-awesome-table').setRequestParam('search', $('#search').val());
+                $('#my-awesome-table').refresh();
             });
 
             /*
@@ -120,14 +121,30 @@ $Conf->setJsFunctionAfter('report');
          * @returns {void}
          */
         function report() {
-            $('#my-response').append('<p>'+new Date().toString()+'</p>');
+            $('#my-response').append('<p> Ajax response on '+new Date().toString()+'</p>');
+            $('.javascript-action').bind('click', function(){
+                alert($(this).data('number')+' in spanish is '+$(this).data('spanish'));
+            });
         }
     </script>
     <style>
         .wrapper {
             margin: 0 auto;
             padding: 10px;
-            max-width: 1000px;
+            max-width: 1100px;
+        }
+
+        .javascript-link {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+
+        .javascript-link span, .javascript-action {
+            cursor: pointer;
+        }
+
+        .javascript-action:hover {
+            background-color: #778899 !important;
         }
     </style>
 </head>
@@ -136,6 +153,7 @@ $Conf->setJsFunctionAfter('report');
         <input type="text" name="search" id="search" placeholder="Search in English or Brazilian"/>
         <button name="go" id="go">Search</button>
         <button name="clear" id="clear">Clear</button>
+        Or click in Brazilian portuguese to see translation
         <br /><br />
         <table id="my-awesome-table"></table>
         <div id="my-response"></div>
