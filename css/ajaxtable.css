@@ -87,6 +87,10 @@ table.ajaxtable-table div.ajaxtable-pagination-setrows {
     float: right;
 }
 
+table.ajaxtable-table div.ajaxtable-pagination-setrows select {
+    width: 100%;
+}
+
 table.ajaxtable-table div.ajaxtable-pagination-totalrows {
     max-width: 30%;
     padding: 15px;
