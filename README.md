@@ -3,6 +3,8 @@ AjaxTable is PHP and JavaScript library to build tables with ajax to get and dis
 
 AjaxTable support pagination, responsive, i18n and more. You can change style, add html classes, change strings in your Language class and more.
 
+Want to see more? We have a demo [here](https://ajaxtable.vectornet.etc.br/).
+
 ## Requeriments ##
 
 * PHP 5.4 or later
