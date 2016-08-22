@@ -9,7 +9,7 @@
  * @see http://www.vectornet.com.br
  */
 
-require(__DIR__.'/ajaxtable/src/autoload.php');
+require(__DIR__.'/../src/autoload.php');
 
 /*
  * AjaxTable is separated in two steps, create config and response request
@@ -87,16 +87,16 @@ $Conf->setJsFunctionAfter('report');
 <head>
     <title>Ajaxgrid</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="ajaxtable/css/ajaxtable.min.css" media="screen" type="text/css" />
-    <link rel="stylesheet" href="ajaxtable/css/ajaxtable-responsive.min.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="../css/ajaxtable.min.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="../css/ajaxtable-responsive.min.css" media="screen" type="text/css" />
     <script src="https://code.jquery.com/jquery-1.10.2.min.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="ajaxtable/js/ajaxtable.js"></script>
+    <script type="text/javascript" src="../js/ajaxtable.js"></script>
     <script>
         jQuery().ready(function(){
             /*
              * And here you build your json config for AjaxTable js lib
              */
-            $('#my-awesome-table').ajaxTable(<?php echo $Conf->getJson(); ?>);
+            $('#my-awesome-table').ajaxTable('<?php echo $Conf->getJson(); ?>');
 
             /*
              * You can add external params for request

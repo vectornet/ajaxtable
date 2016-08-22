@@ -77,11 +77,18 @@ abstract class Lang
     protected $norows = 'No results found';
 
     /**
-     * Language on text about response error
+     * Language on text about response error on retrieving data
      *
      * @var string
      */
-    protected $error = 'An error occurred during retrieving data, try again';
+    protected $error_retrieve_data = 'An error occurred during retrieving data, try again';
+
+    /**
+     * Language on text about response error on set configurations to AjaxTable
+     *
+     * @var string
+     */
+    protected $error_set_config = 'The configuration defined for AjaxTable is invalid, try again';
 
     /**
      * Set custom language translation on the fly
@@ -128,7 +135,8 @@ abstract class Lang
         $array['textReload'] =  $this->reload;
         $array['textSetRows'] =  $this->setrows;
         $array['textNoRows'] =  $this->norows;
-        $array['textError'] =  $this->error;
+        $array['textErrorRetrieveData'] =  $this->error_retrieve_data;
+        $array['textErrorSetConfig'] =  $this->error_set_config;
 
         return $array;
     }

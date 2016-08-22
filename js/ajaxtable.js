@@ -88,23 +88,40 @@
                 textReload: 'Reload',
                 textSetRows: '%row rows per page',
                 textNoRows: 'No results found',
-                textError: 'An error occurred during retrieving data, try again'
+                textErrorRetrieveData: 'An error occurred during retrieving data, try again',
+                textErrorSetConfig: 'The configuration defined for AjaxTable is invalid, try again',
             };
 
             this.each(function(){
-                $(this).data($.extend(
-                    request_options, 
-                    response_options, 
-                    format_options, 
-                    text_options, 
-                    options, 
-                    event_options
-                ));
                 $(this).data('instance_id', this.id);
 
-                $(this).buildTableStructure();
-                $(this).buildTableCols();
-                $(this).refresh();
+                if (!(options instanceof Object)) {
+                    $(this).data($.extend(
+                        request_options, 
+                        response_options, 
+                        format_options, 
+                        text_options, 
+                        {'cols': [{'error': 'Error'}]},
+                        event_options
+                    ));
+
+                    $(this).buildTableStructure();
+                    $(this).buildTableCols();
+                    $(this).buildErrorReport($(this).getOption('textErrorSetConfig'));
+                } else {
+                    $(this).data($.extend(
+                        request_options, 
+                        response_options, 
+                        format_options, 
+                        text_options, 
+                        options, 
+                        event_options
+                    ));
+                    
+                    $(this).buildTableStructure();
+                    $(this).buildTableCols();
+                    $(this).refresh();
+                }
             });
         },
 
@@ -133,7 +150,7 @@
             var html_colgroups = '';
 
             var i = 0;
-            for (i = 0; i < this.getOption('cols').length ; i++) {
+            for (i = 0; i < this.getOption('cols').length; i++) {
                 html_cols += '<th';
                 if (this.getOption('cols')[i].headerId)
                     html_cols += ' id="'+this.getOption('cols')[i].headerId+'"';
@@ -311,16 +328,7 @@
                 async: false,
                 dataType: 'json',
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    this.setOption('json_response', {'totalPages': 1, 'page': 1, 'totalRecords': 0, 'html': ''});
-                    this.clearBody();
-                    this.setOption('page', 1);
-
-                    $('.'+this.getOption('classPaginationFoot')).html(this.getPagination());
-
-                    this.find('tbody').html(this.getError());
-
-                    this.removeClass(this.getOption('classLoading'));
-                    this.addClass(this.getOption('classError'));
+                    this.buildErrorReport(this.getOption('textErrorRetrieveData'));
                 },
                 success: function(data, textStatus, XMLHttpRequest) {
                     this.setOption('json_response', data);
@@ -344,6 +352,25 @@
         },
 
         /**
+         * Get data fron ajax and put on table
+         *
+         * @param {string} reason
+         * @returns {void}
+         */
+        buildErrorReport: function(reason) {
+            this.setOption('json_response', {'totalPages': 1, 'page': 1, 'totalRecords': 0, 'html': ''});
+            this.clearBody();
+            this.setOption('page', 1);
+
+            $('.'+this.getOption('classPaginationFoot')).html(this.getPagination());
+
+            this.find('tbody').html(this.getError(reason));
+
+            this.removeClass(this.getOption('classLoading'));
+            this.addClass(this.getOption('classError'));
+        },        
+
+        /**
          * Get html for no result
          *
          * @returns {string}
@@ -355,10 +382,11 @@
         /**
          * Get html for error
          *
+         * @param {string} message
          * @returns {string}
          */
-        getError: function() {
-            return '<tr class="'+this.getOption('classError')+'"><td colspan="'+this.getOption('cols').length +'">'+this.getOption('textError')+'</td></tr>';
+        getError: function(message) {
+            return '<tr class="'+this.getOption('classError')+'"><td colspan="'+this.getOption('cols').length +'">'+message+'</td></tr>';
         },
 
         /**
@@ -393,10 +421,10 @@
             $('.'+this.getOption('classSortDesc')).removeClass(this.getOption('classSortDesc'));
 
             $(element)
-                    .parent()
-                    .addClass(this.getOption(this.getOption('sortOrder') === 'ASC' ? 'classSortAsc' : 'classSortDesc'))
-                    .find('span')
-                    .html(this.getOption('sortOrder') === 'ASC' ? '▲' : '▼')
+                .parent()
+                .addClass(this.getOption(this.getOption('sortOrder') === 'ASC' ? 'classSortAsc' : 'classSortDesc'))
+                .find('span')
+                .html(this.getOption('sortOrder') === 'ASC' ? '▲' : '▼')
             ;
             $(this).refresh();
         },
