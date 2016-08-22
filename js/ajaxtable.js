@@ -93,8 +93,6 @@
             };
 
             this.each(function(){
-                $(this).data('instance_id', this.id);
-
                 if (!(options instanceof Object)) {
                     $(this).data($.extend(
                         request_options, 
@@ -104,6 +102,8 @@
                         {'cols': [{'error': 'Error'}]},
                         event_options
                     ));
+
+                    $(this).data('instance_id', this.id);
 
                     $(this).buildTableStructure();
                     $(this).buildTableCols();
@@ -117,6 +117,8 @@
                         options, 
                         event_options
                     ));
+
+                    $(this).data('instance_id', this.id);
                     
                     $(this).buildTableStructure();
                     $(this).buildTableCols();
