@@ -29,6 +29,7 @@ class PtBr extends Lang
         $this->reload = 'Recarregar';
         $this->setrows = '%row linhas';
         $this->norows = 'Nenhum registro encontrado';
-        $this->error = 'Um erro ocorreu durante a requisição dos dados, tente novamente';
+        $this->error_retrieve_data = 'Um erro ocorreu durante a requisição dos dados, tente novamente';
+        $this->error_set_config = 'As configurações definidas para o AjaxTable são inválidas, tente novamente';
     }
 }

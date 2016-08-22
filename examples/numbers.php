@@ -9,7 +9,7 @@
  * @see http://www.vectornet.com.br
  */
 
-require(__DIR__.'/ajaxtable/src/autoload.php');
+require(__DIR__.'/../src/autoload.php');
 
 /*
  * AjaxTable is separated in two steps, create config and response request
@@ -23,7 +23,7 @@ if (isset($_REQUEST['action'])) {
             /*
              * With this example have numbers.sql for you to play
              */
-            $conn = mysqli_connect('localhost', 'your-awesome-root-user', 'with-his-awesome-password', 'and-awesome-database');
+            $conn = mysqli_connect('localhost', 'the-amazing-root', 'with-his-awesome-password', 'and-awesome-database');
             $conn->query('SET CHARACTER_SET utf8');
             $conn->query('SET NAMES utf8');
 
