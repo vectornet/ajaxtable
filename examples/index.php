@@ -96,7 +96,7 @@ $Conf->setJsFunctionAfter('report');
             /*
              * And here you build your json config for AjaxTable js lib
              */
-            $('#my-awesome-table').ajaxTable('<?php echo $Conf->getJson(); ?>');
+            $('#my-awesome-table').ajaxTable(<?php echo $Conf->getJson(); ?>);
 
             /*
              * You can add external params for request
