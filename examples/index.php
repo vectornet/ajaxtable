@@ -55,11 +55,12 @@ $Conf->setSortDesc('pt-br');
  * You can instantiate your language class and change strings before add to config
  */
 $Lang = new VectorDev\AjaxTable\Lang\PtBr();
+//$Lang->useArrows();
 
-$Lang->first = '&lt;&lt;';
-$Lang->previous = '&lt;';
-$Lang->next = '&gt;';
-$Lang->last = '&gt;&gt;';
+$Lang->first = 'go to first NOW!';
+$Lang->previous = 'much previous';
+$Lang->next = 'wow next';
+$Lang->last = 'endif;';
 
 $Conf->setLang($Lang);
 

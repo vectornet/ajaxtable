@@ -156,4 +156,28 @@ abstract class Lang
         }
         return $json;
     }
+
+    /**
+     * Enable to use arrows instead words on pagination
+     *
+     * @return void
+     */
+    public function useArrows()
+    {
+        $this->first = '&lt;&lt;';
+        $this->previous = '&lt;';
+        $this->next = '&gt;';
+        $this->last = '&gt;&gt;';
+    }
+
+    /**
+     * Alias of method setArrows
+     *
+     * @return void
+     * @see self::useArrows()
+     */
+    public function enableArrows()
+    {
+        $this->setArrows();
+    }
 }
