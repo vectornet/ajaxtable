@@ -35,13 +35,16 @@ $Br = new VectorDev\AjaxTable\Col('pt-br', 'Brazilian');
 $Br->setOrder('pt-br');
 
 $Conf->addColumn($ColumnId);
-$Conf->addColumn($En);
-$Conf->addColumn($Br);
+$Conf->addColumn($En, $Br);
 $Conf->addColumn(new VectorDev\AjaxTable\Column('es-es', 'Spanish'));
-$Conf->addCol(new VectorDev\AjaxTable\Col('fr-fr', 'French'));
-$Conf->addCol(new VectorDev\AjaxTable\Column('de-de', 'Germany'));
-$Conf->addColumn(new VectorDev\AjaxTable\Col('ja-jp', 'Japanese'));
-$Conf->addColumn(new VectorDev\AjaxTable\Column('ru-ru', 'Russian'));
+$Conf->addCol(
+    new VectorDev\AjaxTable\Col('fr-fr', 'French'),
+    new VectorDev\AjaxTable\Column('de-de', 'Germany')
+);
+$Conf->addColumn(
+    new VectorDev\AjaxTable\Col('ja-jp', 'Japanese'),
+    new VectorDev\AjaxTable\Column('ru-ru', 'Russian')
+);
 $Conf->addCol(new VectorDev\AjaxTable\Column('ko-kp', 'Korean'));
 $Conf->addCol(new VectorDev\AjaxTable\Col('he-il', 'Hebrew'));
 
