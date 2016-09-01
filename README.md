@@ -1,4 +1,8 @@
 # AjaxTable #
+
+[![Latest Stable Version](https://poser.pugx.org/vectordev/ajaxtable/v/stable)](https://packagist.org/packages/vectordev/ajaxtable) [![Latest Unstable Version](https://poser.pugx.org/vectordev/ajaxtable/v/unstable)](https://packagist.org/packages/vectordev/ajaxtable) [![Total Downloads](https://poser.pugx.org/vectordev/ajaxtable/downloads)](https://packagist.org/packages/vectordev/ajaxtable) [![License](https://poser.pugx.org/vectordev/ajaxtable/license)](https://packagist.org/packages/vectordev/ajaxtable)
+
+
 AjaxTable is PHP and JavaScript library to build tables with ajax to get and display data. Different from another js plugins, AjaxTable build all table data and send to view, so javascript not be heavy on your page.
 
 AjaxTable support pagination, responsive, i18n and more. You can change style, add html classes, change strings in your Language class and more.
