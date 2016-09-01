@@ -1,6 +1,6 @@
 <?php
 /**
- * Manipulates all col data for configurate ajaxtable.js
+ * Manipulates all column data for configurate ajaxtable.js
  *
  * @author Joubert <eu@redrat.com.br>
  * @copyright Copyright (c) 2016 Vector Internet Business and AjaxTable contributors

@@ -11,7 +11,7 @@
 
 namespace VectorDev\AjaxTable;
 
-class Conf extends Configuration
+class Config extends Configuration
 {
 
 }
