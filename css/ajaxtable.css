@@ -101,3 +101,7 @@ table.ajaxtable-table div.ajaxtable-pagination-totalrows {
 table.ajaxtable-table td.ajaxtable-sort-arrow {
     font-weight: bold;
 }
+
+table.ajaxtable-table thead.ajaxtable-head tr.ajaxtable-cols th.ajaxtable-col-sortable a {
+    border-bottom: 1px dotted #aed1ff;
+}
