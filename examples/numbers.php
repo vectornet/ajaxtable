@@ -23,7 +23,12 @@ if (isset($_REQUEST['action'])) {
             /*
              * With this example have numbers.sql for you to play
              */
-            $conn = mysqli_connect('localhost', 'the-amazing-root', 'with-his-awesome-password', 'and-awesome-database');
+            $conn = mysqli_connect(
+                'localhost',
+                'the-amazing-root',
+                'with-his-awesome-password',
+                'and-awesome-database'
+            );
             $conn->query('SET CHARACTER_SET utf8');
             $conn->query('SET NAMES utf8');
 
@@ -76,7 +81,6 @@ if (isset($_REQUEST['action'])) {
             $data = $conn->query(implode(' ', $query));
 
             while ($rows = $data->fetch_array(MYSQLI_ASSOC)) {
-
                 /*
                  * You create new Cells for for Columns on view
                  */
