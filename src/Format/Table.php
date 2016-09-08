@@ -206,7 +206,6 @@ abstract class Table
      */
     public function setRows($rows)
     {
-
     }
 
     /**
