@@ -287,9 +287,12 @@ class Response extends Format\Table
      *
      * @return array
      */
-    public function getOrderByForSql()
+    public function getOrderByForSql($backtick = true)
     {
-        return $this->sort_col && $this->sort_order ? ['`'.$this->sort_col.'`', $this->sort_order] : null;
+        $string = $backtick ? '`' : '';
+        return $this->sort_col && $this->sort_order ?
+            [$string.$this->sort_col.$string, $this->sort_order] :
+            null;
     }
 
     /**
