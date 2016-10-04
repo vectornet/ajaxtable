@@ -39,7 +39,7 @@
 
             var response_options = {
                 json_response: {}
-            };            
+            };
 
             var format_options = {
                 classTable: 'ajaxtable-table',
@@ -95,10 +95,10 @@
             this.each(function(){
                 if (!(options instanceof Object)) {
                     $(this).data($.extend(
-                        request_options, 
-                        response_options, 
-                        format_options, 
-                        text_options, 
+                        request_options,
+                        response_options,
+                        format_options,
+                        text_options,
                         {'cols': [{'error': 'Error'}]},
                         event_options
                     ));
@@ -110,16 +110,16 @@
                     $(this).buildErrorReport($(this).getOption('textErrorSetConfig'));
                 } else {
                     $(this).data($.extend(
-                        request_options, 
-                        response_options, 
-                        format_options, 
-                        text_options, 
-                        options, 
+                        request_options,
+                        response_options,
+                        format_options,
+                        text_options,
+                        options,
                         event_options
                     ));
 
                     $(this).data('instance_id', this.id);
-                    
+
                     $(this).buildTableStructure();
                     $(this).buildTableCols();
                     $(this).refresh();
@@ -338,10 +338,10 @@
                     this.setOption('page', data.page);
 
                     if (this.getOption('json_response').totalRecords > 10 && this.getOption('rows') > 10)
-                        $('.'+this.getOption('classPaginationHead')).html(this.getPagination());
+                        $('#'+this.attr('id')+' .'+this.getOption('classPaginationHead')).html(this.getPagination());
                     else
-                        $('.'+this.getOption('classPaginationHead')).html('');
-                    $('.'+this.getOption('classPaginationFoot')).html(this.getPagination());
+                        $('#'+this.attr('id')+' .'+this.getOption('classPaginationHead')).html('');
+                    $('#'+this.attr('id')+' .'+this.getOption('classPaginationFoot')).html(this.getPagination());
 
                     if (this.getOption('json_response').totalRecords > 0)
                         this.find('tbody').html(this.getOption('json_response').html);
@@ -370,7 +370,7 @@
 
             this.removeClass(this.getOption('classLoading'));
             this.addClass(this.getOption('classError'));
-        },        
+        },
 
         /**
          * Get html for no result
